@@ -1,0 +1,9 @@
+splatnet2-statink:
+  build: ./
+  # volumes:
+    # - cache:/app # splatnet2statinkのリポジトリ更新キャッシュ用
+  environment: # Containerサービスの環境変数に設定する
+    - api_key=your_api_key
+    - cookie=your_cookie
+    - session_token=your_session.token
+    - user_lang=en-US
