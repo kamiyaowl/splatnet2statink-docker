@@ -1,0 +1,3 @@
+[submodule "splatnet2statink"]
+	path = splatnet2statink
+	url = https://github.com/frozenpandaman/splatnet2statink.git
