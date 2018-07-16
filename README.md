@@ -18,7 +18,7 @@
 
 1. `.dockerignore`から`config.txt`を削除
 
-1. splatnet2statinkで得られた`config.txt`を府rジェクトルートに配置
+1. splatnet2statinkで得られた`config.txt`をプロジェクトルートに配置
 
 1. `docker-compose build`
 
