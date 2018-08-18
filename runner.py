@@ -4,7 +4,7 @@ import subprocess
 
 def env_to_config(envs_src):
     envs = dict([(e, os.getenv(e, "")) for e in envs_src])
-    envs_available = all(envs.values())
+    envs_available = any(envs.values())
     if envs_available:
         with open('config.txt', 'w') as file:
             file.write(json.dumps(envs))
