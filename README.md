@@ -2,7 +2,7 @@
 
 [https://github.com/frozenpandaman/splatnet2statink](https://github.com/frozenpandaman/splatnet2statink)
 
-上記アプリケーションをコンテナエンジン上で動作させる。
+上記アプリケーションをコンテナエンジン上で動作させる。またプログラムの開始時にソースコードを自動的に`git pull`することで常に最新版のsplatnet2statinkを実行できます。
 
 # 使い方
 
@@ -11,6 +11,7 @@
 1. 環境変数に`api_key, session_token, cookie, user_lang`を設定します
 
 1. 実行します
+
 
 ## 実行時に指定(docker-compose)
 
@@ -29,6 +30,18 @@
 1. `docker-compose build`
 
 1. `docker-compose up`
+
+# 設定一覧
+
+| 項目名 | 内容 |
+| --- | -- |
+| api_ley | stat.inkのAPI Key |
+| session_token | splatnet2statink動作のために取得した値 |
+| cookie | splatnet2statink動作のために取得した値 |
+| user_lang | アクセス時の言語。特に指定がなければ"en-US"にしておく |
+| skip_update | 何かしらの値が設定されているとsplatnet2statinkの`git pull`を抑制します |
+| skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します |
+
 
 # ビルド済コンテナ
 
