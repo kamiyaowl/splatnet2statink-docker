@@ -29,10 +29,10 @@ if __name__ == "__main__":
     subprocess.call(args)
     print('#Done Run {}'.format(args))
     # Salmon runを更新する
-    if not(os.getenv("skip_salmon", "")):
-        salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon"]
-        print('#Start Run {}'.format(salmon_args))
-        p = subprocess.Popen(salmon_args, stdin=subprocess.PIPE, encoding="utf8")
-        p.stdin.write("50")
-        p.stdin.close()
-        print('#Done Run {}'.format(salmon_args))
+    # if not(os.getenv("skip_salmon", "")):
+    #     salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon"]
+    #     print('#Start Run {}'.format(salmon_args))
+    #     p = subprocess.Popen(salmon_args, stdin=subprocess.PIPE, encoding="utf8")
+    #     p.stdin.write("50")
+    #     p.stdin.close()
+    #     print('#Done Run {}'.format(salmon_args))
