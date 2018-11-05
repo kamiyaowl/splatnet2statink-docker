@@ -2,6 +2,8 @@ import os
 import json
 import subprocess
 
+VERSION = "1.3.1"
+
 # api_key, cookie, session_token, user_langのいずれかが書かれていたらconfig.txtを更新
 def env_to_config(envs_src):
     envs = dict([(e, os.getenv(e, "")) for e in envs_src])
@@ -13,6 +15,7 @@ def env_to_config(envs_src):
         print('#Done Update config.txt')
 
 if __name__ == "__main__":
+    print("splatnet2statink-docker v{}".format(VERSION))
     # Docker環境変数からコンフィグを生成
     envs_src = ["api_key", "cookie", "session_token", "user_lang"]
     env_to_config(envs_src)
