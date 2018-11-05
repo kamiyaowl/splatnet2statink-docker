@@ -1,47 +1,46 @@
 # splatnet2statink-docker
 
-[https://github.com/frozenpandaman/splatnet2statink](https://github.com/frozenpandaman/splatnet2statink)
 
-上記アプリケーションをコンテナエンジン上で動作させる。またプログラムの開始時にソースコードを自動的に`git pull`することで常に最新版のsplatnet2statinkを実行できます。
+
+[splatnet2statink](https://github.com/frozenpandaman/splatnet2statink)をコンテナエンジン上で動作させることができます。またプログラムの開始時にソースコードを自動的に`git pull`することで常に最新版のsplatnet2statinkを実行できます。
 
 # 使い方
 
-## 実行時に指定
+## Dockerで実行
 
-1. 環境変数に`api_key, session_token, cookie, user_lang`を設定します
+環境変数に`api_key, session_token, cookie, user_lang`を設定して、実行します。
 
-1. 実行します
+```
+$ docker run -e api_key=<your api key> \
+             -e session_token=<your session token> \
+             -e cookie=<your cookie> \
+             -e user_lang=<your user_lang>
+```
 
+## Docker-composeで実行
 
-## 実行時に指定(docker-compose)
+上記を例に`docker-compose.yml`に事前にsplatnet2statinkを実行して得られた`config.txt`の値を設定。(取扱い注意)
 
-1. `docker-compose.yml`に事前にsplatnet2statinkを実行して得られた`config.txt`の値を設定。(取扱い注意)
-
-1. `$ docker-compose up`
-
-## コンテナを自分でビルドする場合
-
-`Dockerfile`はプロジェクトフォルダごとコンテナ内にコピーします。この際にconfig.txtをコンテナ内に移動させることで環境変数無しで実行できます。
-
-1. `.dockerignore`から`config.txt`を削除
-
-1. splatnet2statinkで得られた`config.txt`をプロジェクトルートに配置
-
-1. `docker-compose build`
-
-1. `docker-compose up`
+```
+$ docker-compose up
+```
 
 # 設定一覧
 
-| 項目名 | 内容 |
-| --- | -- |
-| api_ley | stat.inkのAPI Key |
-| session_token | splatnet2statink動作のために取得した値 |
-| cookie | splatnet2statink動作のために取得した値 |
-| user_lang | アクセス時の言語。特に指定がなければ"en-US"にしておく |
-| skip_update | 何かしらの値が設定されているとsplatnet2statinkの`git pull`を抑制します |
-| skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します |
+| 項目名 | 内容 | 初期値 |
+| --- | -- | -- |
+| api_key | stat.inkのAPI Key | "" |
+| session_token | splatnet2statink動作のために取得した値 | "" |
+| cookie | splatnet2statink動作のために取得した値 | "" |
+| user_lang | アクセス時の言語。特に指定がなければ"en-US"にしておく | "en-US" |
+| run_flags | splatnet2statink起動時のフラグ(salmon run起動時のものは編集できません) | "-r" |
+| skip_update | 何かしらの値が設定されているとsplatnet2statinkの`git pull`を抑制します | false |
+| skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します | false |
 
+# 定期実行のヒント
+
+1. Google Cloud等クラウドアプリケーションで実行する 
+1. 保有するサーバでcrontab等でコンテナを定期的に実行する
 
 # ビルド済コンテナ
 
