@@ -2,6 +2,7 @@ import os
 import json
 import subprocess
 
+# api_key, cookie, session_token, user_langのいずれかが書かれていたらconfig.txtを更新
 def env_to_config(envs_src):
     envs = dict([(e, os.getenv(e, "")) for e in envs_src])
     envs_available = any(envs.values())
@@ -29,10 +30,11 @@ if __name__ == "__main__":
     subprocess.call(args)
     print('#Done Run {}'.format(args))
     # Salmon runを更新する
-    # if not(os.getenv("skip_salmon", "")):
-    #     salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon"]
-    #     print('#Start Run {}'.format(salmon_args))
-    #     p = subprocess.Popen(salmon_args, stdin=subprocess.PIPE, encoding="utf8")
-    #     p.stdin.write("50")
-    #     p.stdin.close()
-    #     print('#Done Run {}'.format(salmon_args))
+    if not(os.getenv("skip_salmon", "")):
+        salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon", "-r"]
+        print('#Start Run {}'.format(salmon_args))
+        p = subprocess.Popen(salmon_args, stdin=subprocess.PIPE, encoding="utf8")
+        p.stdin.write("50")
+        p.stdin.close()
+        p.wait()
+        print('#Done Run {}'.format(salmon_args))
