@@ -2,7 +2,7 @@
 
 
 
-[splatnet2statink](https://github.com/frozenpandaman/splatnet2statink)をコンテナエンジン上で動作させることができます。またプログラムの開始時にソースコードを自動的に`git pull`することで常に最新版のsplatnet2statinkを実行できます。
+[splatnet2statink](https://github.com/frozenpandaman/splatnet2statink)を半ば強引ながらコンテナエンジン上で動作させることができます。またプログラムの開始時にソースコードを自動的に`git pull`することで常に最新版のsplatnet2statinkを実行できます。
 
 # 使い方
 
@@ -32,15 +32,15 @@ $ docker-compose up
 | api_key | stat.inkのAPI Key | "" |
 | session_token | splatnet2statink動作のために取得した値 | "" |
 | cookie | splatnet2statink動作のために取得した値 | "" |
-| user_lang | アクセス時の言語。特に指定がなければ"en-US"にしておく | "en-US" |
+| user_lang | アクセス時の言語。特に指定がなければ"en-US"にしておく | "" |
 | run_flags | splatnet2statink起動時のフラグ(salmon run起動時のものは編集できません) | "-r" |
 | skip_update | 何かしらの値が設定されているとsplatnet2statinkの`git pull`を抑制します | false |
 | skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します | false |
 
 # 定期実行のヒント
 
-1. Google Cloud等クラウドアプリケーションで実行する 
-1. 保有するサーバでcrontab等でコンテナを定期的に実行する
+1. Google Cloud等クラウドアプリケーションとして実行する 
+1. crontab等でコンテナを定期的に実行する
 
 # ビルド済コンテナ
 
