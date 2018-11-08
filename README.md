@@ -40,8 +40,8 @@ $ docker-compose up
 # 定期実行のヒント
 
 1. Google Cloud等クラウドアプリケーションとして実行する 
+    1. [はてなブログ GKEでCronJobを使い、定期処理を実行する](http://logiclover.hatenablog.jp/entry/2018/07/28/182621)
 1. crontab等でコンテナを定期的に実行する 
-1. `$ docker-compose -d`
 
 # ビルド済コンテナ
 
