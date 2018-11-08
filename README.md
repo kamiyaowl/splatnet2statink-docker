@@ -45,4 +45,4 @@ $ docker-compose up
 
 # ビルド済コンテナ
 
-[DockerHub](https://cloud.docker.com/swarm/kamiyaowl/repository/docker/kamiyaowl/splatnet2statink-docker/general)
+[DockerHub](https://hub.docker.com/r/kamiyaowl/splatnet2statink-docker/)
