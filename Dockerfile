@@ -4,5 +4,6 @@ RUN git clone https://github.com/kamiyaowl/splatnet2statink-docker.git --recursi
 WORKDIR /splatnet2statink-docker
 
 RUN pip3 install --upgrade -r splatnet2statink/requirements.txt
+RUN pip3 install --upgrade -r requirements.txt
 
 CMD ["python", "-u", "runner.py"]
