@@ -36,6 +36,9 @@ $ docker-compose up
 | run_flags | splatnet2statink起動時のフラグ(salmon run起動時のものは編集できません) | "-r" |
 | skip_update | 何かしらの値が設定されているとsplatnet2statinkの`git pull`を抑制します | false |
 | skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します | false |
+| flask_run | httpリクエストをトリガーに実行する場合はtrue | "" |
+| flask_port | `flask_run`を使用する場合のポート | "8080" |
+| flask_debug | `flask_run`利用時にFlaskのモード | "True" |
 
 # 定期実行のヒント
 
