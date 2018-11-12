@@ -35,14 +35,14 @@ def sync_battle():
     with Popen(args, stdout=PIPE, encoding="utf8") as proc:
         yield proc.stdout.read()
     yield ('#Done Run {}'.format(args))
-    
+
 def sync_salmon():
     salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon", "-r"]
     yield ('#Start Run {}'.format(salmon_args))
-    p = Popen(salmon_args, stdin=PIPE, encoding="utf8")
-    p.stdin.write("50")
-    p.stdin.close()
-    p.wait()
+    with Popen(salmon_args, stdin=PIPE, stdout=PIPE, encoding="utf8") as proc:
+        proc.stdin.write("50")
+        proc.stdin.close()
+        yield proc.stdout.read()
     yield ('#Done Run {}'.format(salmon_args))
 
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print("splatnet2statink-docker v{}".format(VERSION))
     run_flask = os.getenv("flask_run", "")
     run_port = os.getenv("flask_port", "8080")
-    debug = os.getenv("flask_debug", "True")
+    debug = os.getenv("flask_debug", "False")
     if (run_flask):
         print("REST API mode. port {} listen ...".format(run_port))
         app.run(debug=debug, host="0.0.0.0", port=run_port)
