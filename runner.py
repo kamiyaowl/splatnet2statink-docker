@@ -1,6 +1,7 @@
 import os
 import json
 import subprocess
+from subprocess import Popen, PIPE
 import time
 from flask import Flask, stream_with_context, Response
 
@@ -19,26 +20,31 @@ def write_config():
 
 def update_submodules():
     yield ("#Start Update git submodules")
-    subprocess.call(["git", "submodule", "foreach", "git", "reset", "--hard", ])
-    subprocess.call(["git", "submodule", "foreach", "git", "pull", "origin", "master", ])
+    with Popen(["git", "submodule", "foreach", "git", "reset", "--hard", ], stdout=PIPE, encoding="utf8") as proc:
+        yield proc.stdout.read()
+    with Popen(["git", "submodule", "foreach", "git", "pull", "origin", "master", ], stdout=PIPE, encoding="utf8") as proc:
+        yield proc.stdout.read()
     yield ("#Done Update git submodules")
 
-def sync_salmon():
-    salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon", "-r"]
-    yield ('#Start Run {}'.format(salmon_args))
-    p = subprocess.Popen(salmon_args, stdin=subprocess.PIPE, encoding="utf8")
-    p.stdin.write("50")
-    p.stdin.close()
-    p.wait()
-    yield ('#Done Run {}'.format(salmon_args))
 
 def sync_battle():
     args = ["python", "./splatnet2statink/splatnet2statink.py"]
     flags = os.getenv("run_flags", "-r").split(" ")
     args.extend(flags)
     yield ('#Start Run {}'.format(args))
-    subprocess.call(args)
+    with Popen(args, stdout=PIPE, encoding="utf8") as proc:
+        yield proc.stdout.read()
     yield ('#Done Run {}'.format(args))
+    
+def sync_salmon():
+    salmon_args = ["python", "./splatnet2statink/splatnet2statink.py", "--salmon", "-r"]
+    yield ('#Start Run {}'.format(salmon_args))
+    p = Popen(salmon_args, stdin=PIPE, encoding="utf8")
+    p.stdin.write("50")
+    p.stdin.close()
+    p.wait()
+    yield ('#Done Run {}'.format(salmon_args))
+
 
 def sync_all():
     # 時間計測
