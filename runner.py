@@ -7,12 +7,7 @@ from flask import Flask, stream_with_context, Response
 app = Flask(__name__)
 VERSION = "1.3.3-beta2"
 
-@app.route('/')
-def index():
-    return 'OK'
-
-# api_key, cookie, session_token, user_langのいずれかが書かれていたらconfig.txtを更新
-def env_to_config():
+def write_config():
     envs_src = ["api_key", "cookie", "session_token", "user_lang"]
     envs = dict([(e, os.getenv(e, "")) for e in envs_src])
     envs_available = any(envs.values())
@@ -45,12 +40,11 @@ def sync_battle():
     subprocess.call(args)
     yield ('#Done Run {}'.format(args))
 
-@app.route('/sync')
 def sync_all():
     # 時間計測
     start = time.time()
     # Docker環境変数からコンフィグを生成
-    for log in env_to_config():
+    for log in write_config():
         yield log
     # submoduleで追加されたsplatnet2statinkを更新
     if not(os.getenv("skip_update", "")):
@@ -65,6 +59,23 @@ def sync_all():
             yield log
     elapsed = time.time() - start
     yield ("elapsed_time: {}".format(elapsed))
+
+# ジェネレータの値をプリントしてから返す
+def yield_insert_debug(func, sep="\n"):
+    for log in func():
+        print(log)
+        yield log + sep
+
+########## Flask Response ##########
+@app.route('/')
+def index():
+    return 'OK'
+
+@app.route('/sync')
+def sync():
+    return Response(stream_with_context(yield_insert_debug(func=sync_all)))
+########## Flask Response ##########
+
 
 if __name__ == "__main__":
     print("splatnet2statink-docker v{}".format(VERSION))
