@@ -38,13 +38,30 @@ $ docker-compose up
 | skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します | false |
 | flask_run | httpリクエストをトリガーに実行する場合はtrue | "" |
 | flask_port | `flask_run`を使用する場合のポート | "8080" |
-| flask_debug | `flask_run`利用時にFlaskのモード | "True" |
+| flask_debug | `flask_run`利用時にFlaskのモード | "False" |
 
 # 定期実行のヒント
 
-1. Google Cloud等クラウドアプリケーションとして実行する 
-    1. [はてなブログ GKEでCronJobを使い、定期処理を実行する](http://logiclover.hatenablog.jp/entry/2018/07/28/182621)
-1. crontab等でコンテナを定期的に実行する 
+## Google Cloud等クラウドアプリケーションとして実行する 
+
+[はてなブログ GKEでCronJobを使い、定期処理を実行する](http://logiclover.hatenablog.jp/entry/2018/07/28/182621)
+
+## crontab等でコンテナを定期的に実行する 
+
+## Flask実行モードで起動し、一定時間ごとにHTTPリクエストをトリガーする(beta)
+
+`flask_run=1`を環境変数にセットした状態で起動すると、Flaskサーバで待受を行います。
+`/sync`にアクセスがあった際に初めて更新処理を開始します。
+
+
+レスポンスには時間がかかりすぎないように、適宜ログ出力をStream Textとして出力するように実装しています(knativeのtimeout対策)
+
+ | Endpoint | 返却値 | 機能 |
+ | --- | --- | --- |
+ | `/` | `'OK'` | 動作確認用 |
+ | `/sync` | 同期ログすべて | `flask_run=0`で起動した時と同様の挙動をします |
+
+`/sync`の処理には時間がかかるため、連続してリクエストを投げないようにしてください。更新データがなくても当方の環境でも平均５秒程度かかります。
 
 # ビルド済コンテナ
 
