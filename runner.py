@@ -8,6 +8,8 @@ from flask import Flask, stream_with_context, Response
 app = Flask(__name__)
 VERSION = "1.3.3"
 
+up_time = time.time()
+
 def write_config():
     envs_src = ["api_key", "cookie", "session_token", "user_lang"]
     envs = dict([(e, os.getenv(e, "")) for e in envs_src])
@@ -75,7 +77,8 @@ def yield_insert_debug(func, sep="\n"):
 ########## Flask Response ##########
 @app.route('/')
 def index():
-    return 'OK'
+    elapsed = time.time() - up_time
+    return ("OK, up_time: {}".format(elapsed))
 
 @app.route('/sync')
 def sync():

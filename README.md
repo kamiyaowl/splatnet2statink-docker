@@ -11,7 +11,8 @@
 環境変数に`api_key, session_token, cookie, user_lang`を設定して、実行します。
 
 ```
-$ docker run -e api_key=<your api key> \
+$ docker run kamiyaowl/splatnet2statink-docker \
+             -e api_key=<your api key> \
              -e session_token=<your session token> \
              -e cookie=<your cookie> \
              -e user_lang=<your user_lang>
@@ -38,7 +39,7 @@ $ docker-compose up
 | skip_salmon | 何かしらの値が設定されているとSalmon Runの更新を抑制します | false |
 | flask_run | httpリクエストをトリガーに実行する場合はtrue | "" |
 | flask_port | `flask_run`を使用する場合のポート | "8080" |
-| flask_debug | `flask_run`利用時にFlaskのモード | "False" |
+| flask_debug | `flask_run`利用時にFlaskのモード | "" |
 
 # 定期実行のヒント
 
@@ -48,7 +49,9 @@ $ docker-compose up
 
 ## crontab等でコンテナを定期的に実行する 
 
-## Flask実行モードで起動し、一定時間ごとにHTTPリクエストをトリガーする(beta)
+`$ docker-compose up`及び`$ docker run`を定期実行させます。詳細は割愛。
+
+## 一定時間ごとにHTTPリクエストをトリガーする(beta)
 
 `flask_run=1`を環境変数にセットした状態で起動すると、Flaskサーバで待受を行います。
 `/sync`にアクセスがあった際に初めて更新処理を開始します。
@@ -58,7 +61,7 @@ $ docker-compose up
 
  | Endpoint | 返却値 | 機能 |
  | --- | --- | --- |
- | `/` | `'OK'` | 動作確認用 |
+ | `/` | `'OK, up_time=XXX.xxx'` | 動作確認用。起動時間も表示します |
  | `/sync` | 同期ログすべて | `flask_run=0`で起動した時と同様の挙動をします |
 
 `/sync`の処理には時間がかかるため、連続してリクエストを投げないようにしてください。更新データがなくても当方の環境でも平均５秒程度かかります。
