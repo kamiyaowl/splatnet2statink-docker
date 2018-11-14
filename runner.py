@@ -90,7 +90,7 @@ if __name__ == "__main__":
     debug = os.getenv("flask_debug", "False")
     if (run_flask):
         print("REST API mode. port {} listen ...".format(run_port))
-        app.run(debug=debug, host="0.0.0.0", port=run_port)
+        app.run(debug=debug, host="0.0.0.0", port=run_port, use_reloader=False)
     else:
         for log in sync_all():
             print(log)
