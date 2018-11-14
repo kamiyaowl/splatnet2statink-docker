@@ -6,7 +6,7 @@ import time
 from flask import Flask, stream_with_context, Response
 
 app = Flask(__name__)
-VERSION = "1.3.3-beta2"
+VERSION = "1.3.3"
 
 def write_config():
     envs_src = ["api_key", "cookie", "session_token", "user_lang"]
