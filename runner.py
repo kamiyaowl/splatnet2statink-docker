@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print("splatnet2statink-docker v{}".format(VERSION))
     run_flask = os.getenv("flask_run", "")
     run_port = os.getenv("flask_port", "8080")
-    debug = os.getenv("flask_debug", "False")
+    debug = os.getenv("flask_debug", "")
     if (run_flask):
         print("REST API mode. port {} listen ...".format(run_port))
         app.run(debug=debug, host="0.0.0.0", port=run_port, use_reloader=False)
